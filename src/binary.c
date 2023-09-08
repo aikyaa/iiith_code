@@ -3,9 +3,9 @@
 
 void main(){
     int n,temp,k,x;
-    x=pow(2,k-1);
     scanf("%d", &n);
     for(int k=30; k>0; k--){
+        x=pow(2,k-1);
         if (((n%x)%2)==1){
             temp=k;
             break;
