@@ -2,6 +2,7 @@
 void main(){
     int N;
     scanf("%d", &N);
+    int var=0;
     int a[N],b[N],c[N],d[N];
     int area=0;
     for (int i=0;i<N;i++){
@@ -31,9 +32,16 @@ void main(){
         }
         }
         excess+=(x*y);
+        for(int q=0; q<=x; q++){
+            for(int r=0; r<N; r++){
+                if (arr[r]==q);
+                var+=1;
+            }
+        }
         y=0;
         x=0;
     }
     }
+    if (var%N==0)
     printf("%d", area-excess);
 }

@@ -7,14 +7,13 @@ void main(){
         for (int j=1; j<=N; j++){
             scanf(" %d", &grid[i][j]);
         }
-        scanf("\n");
     }
     int temp1=grid[1][1];
     int temp2=grid[1][N];
     int temp3=grid[N][1];
     int temp4=grid[N][N];
     scanf("%d", &D);
-    if (D=0){
+    if (D==0){
         for (int k=1;k<=N;k++){
             grid[1][k-1]=grid[1][k];
         }
@@ -25,7 +24,7 @@ void main(){
             grid[N][l+1]=grid[N][l];
         }
         for (int n=1;n<=N;n++){
-            grid[N][n-1]=grid[N][n];
+            grid[n-1][N]=grid[n][N];
         }
         grid[2][1]= temp1;
         grid[N][2]= temp3;
@@ -46,7 +45,7 @@ void main(){
         }
         grid[1][2]= temp1;
         grid[2][N]= temp2;
-        grid[N-1][1]= temp2;
+        grid[N-1][1]= temp3;
         grid[N][N-1]= temp4;
     }
     for(int i=1; i<=N; i++){
