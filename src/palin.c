@@ -7,17 +7,19 @@ void main(){
     for (int i=0; i<N; i++){
         scanf(" %d", &arr[i]);
     }
-    int l=0;
+    int value=1;
     for (int j=0; j<N; j++){
         for (int k=j+1; k<N; k++){
-            while((j+l)<=(k-l)){
-            if (arr[j+l]==arr[k-l]) {
-                l+=1;               
-            } else{
-                break;
+            for(int l=0; l<=(k-j)/2; l++){
+                if (arr[j+l]!=arr[k-l]){
+                    value=0;
+                    break;
+                }
             }
-            count+=1;
+            if (value!=0){
+                count+=1;
             }
+            value=1;
         }
     }
     printf("%d", count+N);
