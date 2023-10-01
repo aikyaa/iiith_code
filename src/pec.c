@@ -32,16 +32,10 @@ void main(){
         }
         }
         excess+=(x*y);
-        for(int q=0; q<=x; q++){
-            for(int r=0; r<N; r++){
-                if (arr[r]==q);
-                var+=1;
-            }
-        }
         y=0;
         x=0;
     }
     }
-    if (var%N==0)
     printf("%d", area-excess);
 }
+// what if all N, N-1, not just two rectangles overlap? start a count variable for each unit square??
