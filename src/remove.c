@@ -1,16 +1,8 @@
 #include<stdio.h>
 #include<string.h>
-
-void swap(char *x, char *y) 
-{ 
-    char temp; 
-    temp = *x; 
-    *x = *y; 
-    *y = temp;
-} 
   
-void permute(char *word, int l, int r)
-{
+void permute(char *word, int l, int r) 
+{ 
     int i;
     char swaphistory[r][r];
     if (l == r) {

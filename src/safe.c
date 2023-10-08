@@ -1,48 +1,47 @@
 #include <stdio.h>
-int step(int coord[][2], int x, int y, int k, int m, int n){
-    static int count=0;
-    for(int i=0;i<k;i++){
-        if (coord[i][0]==x&&coord[i][1]==y){
+int step(int minion_locations[][2], int x, int y, int max_minions, int max_y, int max_x, int fy){
+    int count=0;
+    //making sure we're not reaching a minion
+    for(int o=0;o<max_minions;o++){
+        if (minion_locations[o][0]==x+1&&minion_locations[o][1]==y+1){
             return 0;
         }
     }
-    if (x==n){
-        count+=1;
+    if (x==max_x-1 && y==fy){
+        return 1;
     }
-    if (x<=(m-1)&&y<=(n-2)){
-        step(coord,x+1,y+2,k,m,n);
+    if(x+1<max_x){
+        if (y+2<max_y){
+            count+=step(minion_locations,x+1,y+2,max_minions,max_y,max_x,fy);
+        }
+        if (y>=2){
+            count+=step(minion_locations,x+1,y-2,max_minions,max_y,max_x,fy);
+        }
     }
-    if (x<=(m-1)&&y<=(n+2)){
-        step(coord,x+1,y-2,k,m,n);
-    }
-    if (x<=(m-2)&&y<=(n-1)){
-        step(coord,x+2,y+1,k,m,n);
-    }
-    if (x<=(m-2)&&y<=(n+1)){
-        step(coord,x+2,y-1,k,m,n);
+    if (x+2<max_x){
+        if (y+1<max_y){
+            count+=step(minion_locations,x+2,y+1,max_minions,max_y,max_x,fy);
+        }
+        if (y>=1){
+            count+=step(minion_locations,x+2,y-1,max_minions,max_y,max_x,fy);
+        }
     }
     return count;
 }
 int main(){
-    int m,n,k;
-    scanf("%d %d %d", &n, &m, &k);
-    int coord[k][2];
-    for(int a=0;a<k;a++){
-        scanf("%d %d", &coord[a][0], &coord[a][1]);
+    int max_y,max_x,max_minions;
+    scanf("%d %d %d", &max_x, &max_y, &max_minions);
+    int minion_locations[max_minions][2];
+    for(int a=0;a<max_minions;a++){
+        scanf("%d %d", &minion_locations[a][0], &minion_locations[a][1]);
     }
-    int sum[m+1];
-    for(int i=1;i<=m;i++){
-        for(int j=0; j<n; j++){
-            sum[i]+=step(coord,1,j,k,m,n);
-        }
-    }
-    int max_index=1;
     const long long int MOD=1e9+7;
-    for(int l=2;l<=m;l++){
-        if(sum[max_index]<sum[l]){
-            max_index=l;
+    for(int fy=0;fy<max_y;fy++){
+        int sum=0;
+        for(int iy=0; iy<max_y; iy++){
+            sum+=step(minion_locations,0,iy,max_minions,max_y,max_x,fy);
         }
+        printf("%lld ",sum%MOD);
     }
-    printf("%d %d", max_index, sum[max_index]%MOD);
     return 0;
 }

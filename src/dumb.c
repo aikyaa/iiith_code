@@ -12,32 +12,17 @@ void swap(char *x, char *y)
 void permute(char *word, int l, int r)
 {
     int i;
-    char swaphistory[r][r];
     if (l == r) {
         printf("%s\n", word); 
     }
     else
-    { 
-        int k=0;
-        int value=0;
+    {
         for (i = l; i <= r; i++) 
         {
-            for(int z=0; z<k; z++){
-                if (word[i]==swaphistory[l][z]){
-                    value=1;
-                }
-            }
-            if (value==1){
-                break;
-            }
-            if (word[l]!=word[i] || l==i){
                 swap((word + l), (word + i)); 
-                swaphistory[l][k]=word[i];
-                k+=1;
                 permute(word, l + 1, r);
                 swap((word + l), (word + i)); 
-            }
-        } 
+        }
     } 
 } 
 int factorial(int n){
