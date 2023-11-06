@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+int str_rev(int size, char* str){
+
+    return 0;
+}
+int main(){
+    int len,num_actions;
+    scanf("%d", &len);
+    char str[len];
+    char extra;
+    char newstr[len+1];
+    scanf("%s", str);
+    scanf("%d", &num_actions);
+    for(int i=0; i<num_actions; i++){
+        int action;
+        int pos;
+        scanf("%d", &action);
+        if (action==1){
+            str_rev(len, str);
+        }
+        else if(action==2){
+            scanf("%c", &extra);
+            scanf("%d", &pos);
+            if(pos==1){
+                newstr[0]=extra;
+                for(int i=1; i<=len; i++){
+                    newstr[i]=str[i-1];
+                }
+                strcpy(str, newstr);
+            }
+            else if (pos==2){
+                newstr[len]=extra;
+                for(int i=0; i<len; i++){
+                    newstr[i]=str[i];
+                }
+                strcpy(str, newstr);
+            }
+        }
+    }
+    return 0;
+}

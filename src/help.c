@@ -39,6 +39,14 @@ int factorial(int n){
     return n*factorial(n-1);
     }
 }
+int pos(char x){
+    for(int a=0; a<26; a++){
+        char lowercase[26]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        if (x==lowercase[a]){
+            return a;
+        }
+    }
+}
 int main() 
 { 
     char word[9];
@@ -59,19 +67,16 @@ int main()
     for(int c=0;c<26; c++){
         num=num/factorial(count[c]);
     }
-    printf("%d", num);
+    printf("%d\n", num);
     char **permutations = (char**) malloc((rows)*sizeof(char*));
     for(int z=0; z< rows; z++){
         permutations[z] = (char*)malloc((n+1)*sizeof(char));
     }
     permute(permutations,word, 0, n-1, n); 
-    int pass=0;
-    int result;
     char temp;
-    for(int g=0; g<rows; g++){
+    for(int g=1; g<rows; g++){
         for(int p=0; p<n; p++){
-         if(permutations[g-1][p]>permutations[g][p]){
-            if (result>0){
+            if(pos(permutations[g-1][p])>pos(permutations[g][p])){
                 for(int h=0; h<n; h++){
                     temp=permutations[g-1][h];
                     permutations[g-1][h]=permutations[g][h];
@@ -79,11 +84,16 @@ int main()
                 }
                 break;
             }
-         }
         }
     }
-    for(int d=0; d<rows; d++){
-        for(int e=0; e<n; e++){
+    int pass=0;
+    for(int e=0; e<n; e++){
+                printf("%c", permutations[0][e]);
+            }
+            printf("\n");
+    for(int d=1; d<rows; d++){
+        pass=0;
+            for(int e=0; e<n; e++){
             if(permutations[d-1][e]!=permutations[d][e]){
                 pass=1;
                 break;
@@ -95,6 +105,6 @@ int main()
             }
             printf("\n");
         }
-    }
+        }
     return 0;
 } 
