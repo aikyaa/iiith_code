@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 int str_rev(int size, char* str){
-
+    char temp[size];
+    strcpy(temp,str);
+    for(int i=0; i<size; i++){
+        str[i]=temp[size-1-i];
+    }
     return 0;
 }
 int main(){
@@ -20,23 +24,24 @@ int main(){
             str_rev(len, str);
         }
         else if(action==2){
-            scanf("%c", &extra);
-            scanf("%d", &pos);
+            scanf(" %d", &pos);
+            scanf(" %c", &extra);
             if(pos==1){
                 newstr[0]=extra;
-                for(int i=1; i<=len; i++){
-                    newstr[i]=str[i-1];
+                for(int j=1; j<=len; j++){
+                    newstr[j]=str[j-1];
                 }
                 strcpy(str, newstr);
             }
             else if (pos==2){
                 newstr[len]=extra;
-                for(int i=0; i<len; i++){
-                    newstr[i]=str[i];
+                for(int k=0; k<len; k++){
+                    newstr[k]=str[k];
                 }
                 strcpy(str, newstr);
             }
         }
     }
+    printf("%s", str);
     return 0;
 }
