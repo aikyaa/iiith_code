@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #define _invalid -5555
-#define bucket_count 32768
 
 typedef struct stNode{
     int element;
@@ -20,15 +18,6 @@ typedef struct stht{
 }stht;
 
 typedef struct stht* hasht;
-
-int gethash(int value) {
-    float c=(sqrt(5)-1)/2;
-    long s = c*pow(2, 32);
-    long sv = abs(s * value);
-    int lower_sv = sv % (long) pow(2, 32);
-    key k = lower_sv % bucket_count;
-    return k;
-}
 
 hasht createht(int size){
     hasht newht=(hasht)malloc(sizeof(struct stht));
@@ -56,7 +45,7 @@ hasht createht(int size){
 }
 
 Node find(int target, hasht ht, int prev_index){
-    key k=gethash(target);
+    key k=target%20000;
     if(NULL==ht->category[k]){
         printf("Element not found");
         return NULL;
@@ -76,7 +65,7 @@ Node find(int target, hasht ht, int prev_index){
 }
 
 void delete(int target, hasht ht, int index){
-    key k=gethash(target);
+    key k=target%20000;
     if(NULL==ht->category[k]){
         printf("Element not found");
         return;
@@ -96,7 +85,7 @@ void delete(int target, hasht ht, int index){
 }
 
 void insert(int element, hasht ht, int index){
-    key k=gethash(element);
+    key k=element%20000;
     Node current_head=ht->category[k];
     //if(NULL==find(element,ht)){
         Node new_head=(Node)malloc(sizeof(struct stNode));
@@ -118,7 +107,7 @@ int main(){
         printf("0");
         return 0;
     }
-    hasht ht=createht(bucket_count);
+    hasht ht=createht(20000);
     int inputs[n];
     int indices[n];
     int largest_indices[n];
@@ -132,13 +121,21 @@ int main(){
     for(int j=0; j<n; j++){
         int count=1;
         indices[0]=j;
-        for(int k=1; k<n-j; k++){
-            Node temp=find(inputs[j]+(k),ht, indices[k-1]);
-            if (NULL!=temp) {
-                indices[k]=temp->index;
-                count++;
-            } else{
-                break;
+        Node check=find(inputs[j]+largest_count,ht,indices[0]);
+        if(check != NULL){
+            indices[largest_count]=check->index;
+            count++;
+            for(int k=1; k<n-j; k++){
+                if(largest_count!=k){
+                Node temp=find(inputs[j]+(k),ht, indices[k-1]);    
+                if (NULL!=temp){
+                    indices[k]=temp->index;
+                    count++;
+                }
+                else{
+                    break;
+                }
+                }
             }
         }
 
@@ -149,9 +146,7 @@ int main(){
                 largest_indices[w]=indices[w];
             }
         }
-        if(count==n){
-            break;
-        }
+        //delete(inputs[j], ht, j);
     }
 
     printf("%d\n", largest_count);
